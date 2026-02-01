@@ -315,11 +315,16 @@
             </div>
         </div>
     </footer>
- <!-- WebChat Widget -->
+<!-- WebChat Widget -->
 <script>
+  console.log('🔧 WebChat Widget Initializing...');
+  
   // Set your API URLs
-  window.WEBCHAT_API_URL = 'https://completely-scheme-howto-coordinator.trycloudflare.com';
-  window.WEBCHAT_WS_URL = 'wss://completely-scheme-howto-coordinator.trycloudflare.com';
+  window.WEBCHAT_API_URL = 'https://length-suburban-greatly-assured.trycloudflare.com';
+  window.WEBCHAT_WS_URL = 'wss://length-suburban-greatly-assured.trycloudflare.com';
+  
+  console.log('📡 API URL:', window.WEBCHAT_API_URL);
+  console.log('📡 WS URL:', window.WEBCHAT_WS_URL);
   
   (function(w,d,s,o,f,js,fjs){
     w['WebChatWidget']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
@@ -330,20 +335,27 @@
     js.async=1;
     
     js.onload = function() { 
-      // Widget script loaded successfully
+      console.log('✅ Widget script loaded successfully');
+      console.log('🚀 Window webchat:', typeof window.webchat);
     };
     
     js.onerror = function(e) { 
-      // Failed to load widget script
+      console.error('❌ Failed to load widget script from:', f);
+      console.error('Error:', e);
     };
     
     fjs.parentNode.insertBefore(js,fjs);
-  })(window,document,'script','webchat','https://explained-fancy-corrected-nature.trycloudflare.com/widget/webchat.js');
+  })(window,document,'script','webchat','https://indicates-utilize-shoppers-consultancy.trycloudflare.com/widget/webchat.js');
   
   // Initialize with your widget key after a delay to ensure script is loaded
   setTimeout(function() {
     if (typeof window.webchat === 'function') {
+      console.log('✅ Widget function available, initializing...');
       window.webchat('init', { widgetKey: 'qiFPoUPZ91JGIfnHyC2W86ENjqRSI8bZabdp3tLu8aA' });
+      console.log('✅ Widget init called');
+    } else {
+      console.error('❌ Widget function not available after 2 seconds');
+      console.error('Available on window:', Object.keys(window).filter(k => k.includes('webchat')));
     }
   }, 2000);
 </script>
