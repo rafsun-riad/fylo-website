@@ -317,15 +317,9 @@
     </footer>
 <!-- WebChat Widget -->
 <script>
-  console.log('🔧 WebChat Widget Initializing...');
-  
-  // Set your API URLs
-  window.WEBCHAT_API_URL = 'https://authorities-surveys-appreciated-andrea.trycloudflare.com';
-  window.WEBCHAT_WS_URL = 'wss://authorities-surveys-appreciated-andrea.trycloudflare.com';
-  
-  console.log('📡 API URL:', window.WEBCHAT_API_URL);
-  console.log('📡 WS URL:', window.WEBCHAT_WS_URL);
-  
+  window.WEBCHAT_API_URL = 'https://decision-jvc-gazette-andale.trycloudflare.com';
+  window.WEBCHAT_WS_URL = 'wss://decision-jvc-gazette-andale.trycloudflare.com';
+
   (function(w,d,s,o,f,js,fjs){
     w['WebChatWidget']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
     js=d.createElement(s);
@@ -333,29 +327,19 @@
     js.id=o;
     js.src=f;
     js.async=1;
-    
-    js.onload = function() { 
-      console.log('✅ Widget script loaded successfully');
-      console.log('🚀 Window webchat:', typeof window.webchat);
+
+    js.onerror = function() {
+      console.error('WebChat: Failed to load widget script from ' + f);
     };
-    
-    js.onerror = function(e) { 
-      console.error('❌ Failed to load widget script from:', f);
-      console.error('Error:', e);
-    };
-    
+
     fjs.parentNode.insertBefore(js,fjs);
-  })(window,document,'script','webchat','https://shops-andale-publication-everywhere.trycloudflare.com//widget/webchat.js');
-  
-  // Initialize with your widget key after a delay to ensure script is loaded
+  })(window,document,'script','webchat','https://diary-connection-usually-educators.trycloudflare.com/widget/webchat.js');
+
   setTimeout(function() {
     if (typeof window.webchat === 'function') {
-      console.log('✅ Widget function available, initializing...');
       window.webchat('init', { widgetKey: 'qiFPoUPZ91JGIfnHyC2W86ENjqRSI8bZabdp3tLu8aA' });
-      console.log('✅ Widget init called');
     } else {
-      console.error('❌ Widget function not available after 2 seconds');
-      console.error('Available on window:', Object.keys(window).filter(k => k.includes('webchat')));
+      console.error('WebChat: Widget failed to initialize. Verify the script URL is accessible.');
     }
   }, 2000);
 </script>
