@@ -344,5 +344,170 @@
   }, 2000);
 </script>
 <!-- End WebChat Widget -->
+    <!--
+      ╔══════════════════════════════════════════════════════════════╗
+      ║  LIVE CALL FLOATING WIDGET                                   ║
+      ║  Paste the <script> block below into any page's <body> tag.  ║
+      ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <script>
+      (function () {
+        /* ── Configuration ─────────────────────────────────────────── */
+        var GATEWAY = "https://203.194.117.163/crm_click2dial.php";
+        var AGENT = "4000";
+        var TOKEN = "crm2025call";
+        var PHONE = "01777770467";
+        var NAME = "Support";
+
+        /* ── Inject CSS ─────────────────────────────────────────────── */
+        var style = document.createElement("style");
+        style.textContent =
+          /* wrapper: stacks tooltip above button, anchored bottom-right */
+          "#_lc_wrap{" +
+          "position:fixed;right:24px;bottom:104px;z-index:2147483647;" +
+          "display:flex;flex-direction:column;align-items:center;gap:8px;" +
+          "}" +
+          /* tooltip */
+          "#_lc_tip{" +
+          "background:rgba(15,15,15,.78);color:#fff;" +
+          "font:600 12px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;" +
+          "padding:5px 11px;border-radius:5px;white-space:nowrap;" +
+          "pointer-events:none;opacity:0;transform:translateY(4px);" +
+          "transition:opacity .18s ease,transform .18s ease;" +
+          "letter-spacing:.4px;" +
+          "}" +
+          "#_lc_wrap:hover #_lc_tip{opacity:1;transform:translateY(0);}" +
+          /* floating button */
+          "#_lc_btn{" +
+          "width:56px;height:56px;border-radius:50%;" +
+          "background:linear-gradient(135deg,#0d6efd 0%,#0a58ca 100%);" +
+          "border:none;cursor:pointer;" +
+          "display:flex;align-items:center;justify-content:center;" +
+          "box-shadow:0 4px 18px rgba(13,110,253,.50);" +
+          "transition:background .2s,transform .2s,box-shadow .2s;" +
+          "outline:none;" +
+          "}" +
+          "#_lc_btn:hover{" +
+          "background:linear-gradient(135deg,#0b5ed7 0%,#084298 100%);" +
+          "transform:scale(1.1);" +
+          "box-shadow:0 6px 24px rgba(13,110,253,.65);" +
+          "}" +
+          "#_lc_btn:active{transform:scale(.96);}" +
+          "#_lc_btn svg{fill:#fff;width:26px;height:26px;display:block;}" +
+          /* phone box */
+          "#_lc_box{" +
+          "position:fixed;right:20px;bottom:94px;" +
+          "width:380px;height:520px;" +
+          "background:#fff;" +
+          "box-shadow:0 8px 32px rgba(0,0,0,.22);" +
+          "border-radius:10px;overflow:hidden;" +
+          "display:none;flex-direction:column;" +
+          "z-index:2147483646;" +
+          "animation:_lc_slide .22s ease;" +
+          "}" +
+          "@keyframes _lc_slide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}" +
+          /* header bar */
+          "#_lc_hdr{" +
+          "background:linear-gradient(135deg,#0d6efd 0%,#0a58ca 100%);" +
+          "color:#fff;padding:8px 12px;" +
+          "display:flex;align-items:center;justify-content:space-between;" +
+          "font:600 14px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;" +
+          "flex-shrink:0;" +
+          "}" +
+          "#_lc_hdr svg{fill:#fff;width:16px;height:16px;margin-right:7px;flex-shrink:0;}" +
+          "#_lc_hdr span{display:flex;align-items:center;}" +
+          /* close button */
+          "#_lc_close{" +
+          "background:rgba(255,255,255,.15);border:none;color:#fff;" +
+          "width:26px;height:26px;border-radius:50%;cursor:pointer;" +
+          "display:flex;align-items:center;justify-content:center;" +
+          "font-size:14px;line-height:1;transition:background .15s;" +
+          "flex-shrink:0;" +
+          "}" +
+          "#_lc_close:hover{background:rgba(255,255,255,.30);}" +
+          /* iframe */
+          "#_lc_iframe{flex:1;border:0;width:100%;display:block;}";
+
+        document.head.appendChild(style);
+
+        /* ── Phone SVG icon (Material Design "call" path) ───────────── */
+        var PHONE_ICON =
+          '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 ' +
+          "1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 " +
+          "21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 " +
+          '3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z"/>' +
+          "</svg>";
+
+        /* ── Build phone box ────────────────────────────────────────── */
+        var box = document.createElement("div");
+        box.id = "_lc_box";
+
+        var hdr = document.createElement("div");
+        hdr.id = "_lc_hdr";
+
+        var hdrLabel = document.createElement("span");
+        hdrLabel.innerHTML = PHONE_ICON + "Live Call";
+
+        var closeBtn = document.createElement("button");
+        closeBtn.id = "_lc_close";
+        closeBtn.setAttribute("aria-label", "Close");
+        closeBtn.innerHTML = "&#10005;";
+        closeBtn.onclick = function () {
+          box.style.display = "none";
+          iframe.src = "";
+        };
+
+        hdr.appendChild(hdrLabel);
+        hdr.appendChild(closeBtn);
+
+        var iframe = document.createElement("iframe");
+        iframe.id = "_lc_iframe";
+        iframe.allow = "microphone; autoplay";
+
+        box.appendChild(hdr);
+        box.appendChild(iframe);
+
+        /* ── Build floating button ──────────────────────────────────── */
+        var wrap = document.createElement("div");
+        wrap.id = "_lc_wrap";
+
+        var tip = document.createElement("div");
+        tip.id = "_lc_tip";
+        tip.textContent = "Live Call";
+
+        var btn = document.createElement("button");
+        btn.id = "_lc_btn";
+        btn.setAttribute("aria-label", "Live Call");
+        btn.innerHTML = PHONE_ICON;
+
+        btn.onclick = function () {
+          if (box.style.display === "flex") {
+            box.style.display = "none";
+            iframe.src = "";
+          } else {
+            iframe.src =
+              GATEWAY +
+              "?agent=" +
+              encodeURIComponent(AGENT) +
+              "&phone=" +
+              encodeURIComponent(PHONE) +
+              "&name=" +
+              encodeURIComponent(NAME) +
+              "&token=" +
+              encodeURIComponent(TOKEN) +
+              "&autodial=1";
+            box.style.display = "flex";
+          }
+        };
+
+        wrap.appendChild(tip);
+        wrap.appendChild(btn);
+
+        /* ── Mount to DOM ───────────────────────────────────────────── */
+        document.body.appendChild(box);
+        document.body.appendChild(wrap);
+      })();
+    </script>
 </body>
 </html>
