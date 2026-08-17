@@ -315,35 +315,15 @@
             </div>
         </div>
     </footer>
-<!-- WebChat Widget -->
+<!-- JK AI Voice Widget -->
 <script>
-  window.WEBCHAT_API_URL = 'https://api-oc.adnsmsgw.com';
-  window.WEBCHAT_WS_URL = 'wss://api-oc.adnsmsgw.com';
-
-  (function(w,d,s,o,f,js,fjs){
-    w['WebChatWidget']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
-    js=d.createElement(s);
-    fjs=d.getElementsByTagName(s)[0];
-    js.id=o;
-    js.src=f;
-    js.async=1;
-
-    js.onerror = function() {
-      console.error('WebChat: Failed to load widget script from ' + f);
-    };
-
-    fjs.parentNode.insertBefore(js,fjs);
-  })(window,document,'script','webchat','https://oc.adnsmsgw.com/widget/webchat.js');
-
-  setTimeout(function() {
-    if (typeof window.webchat === 'function') {
-      window.webchat('init', { widgetKey: '4C4tYLJ_JuvE29iv8VmsUVFR6TrM5RQB84doO0571Gg' });
-    } else {
-      console.error('WebChat: Widget failed to initialize. Verify the script URL is accessible.');
-    }
-  }, 2000);
+  (function(w,d,s,o,f,js){
+    w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};
+    js=d.createElement(s);js.id=o;js.src=f;js.async=1;
+    (d.head||d.body).appendChild(js);
+  }(window,document,'script','vw',"https://thecogniwork.com/widget/embed.js"));
+  vw('init', "wgt_sloQ6MkkAvgC-VytNJcmL7lE");
 </script>
-<!-- End WebChat Widget -->
    <!--
       ╔══════════════════════════════════════════════════════════════╗
       ║  LIVE CALL FLOATING WIDGET                                   ║
